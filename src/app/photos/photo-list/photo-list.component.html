@@ -1,0 +1,18 @@
+<div class="text-center mt-3 mb-3">
+  <form>
+    <input
+      class="rounded"
+      type="search"
+      placeholder="search..."
+      autofocus
+      [(ngModel)]="filter"
+      name="filter"
+    >
+  </form>
+</div>
+
+<!-- opcional: mostra o que você está digitando -->
+<p>Filtrando por: "{{ filter }}"</p>
+
+<!-- passe a filter como @Input -->
+<ap-photos [photos]="photos" [filter]="filter"></ap-photos>

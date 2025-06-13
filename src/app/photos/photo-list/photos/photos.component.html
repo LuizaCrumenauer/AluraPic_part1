@@ -1,0 +1,12 @@
+<ol class="list-unstyled">
+    <!-- Cada "row" é um array de até 3 fotos -->
+    <li *ngFor="let row of rows" class="row">
+        <!-- Renderiza só as fotos daquela linha -->
+        <div *ngFor="let photo of row" class="col-4">
+            <ap-photo
+                    [url]="photo.url"
+                    [description]="photo.description">
+            </ap-photo>
+        </div>
+    </li>
+</ol>
