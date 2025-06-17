@@ -1,5 +1,6 @@
-import {Photo} from "../../photo/photo";
-import {Component, Input, OnChanges, SimpleChanges} from "@angular/core";
+import { Component, Input, OnChanges, SimpleChanges } from '@angular/core';
+
+import { Photo } from '../../photo/photo';
 
 @Component({
   selector: 'ap-photos',
@@ -9,28 +10,20 @@ import {Component, Input, OnChanges, SimpleChanges} from "@angular/core";
 export class PhotosComponent implements OnChanges {
 
   @Input() photos: Photo[] = [];
-  @Input() filter: string = '';
-  rows: Photo[][] = [];
+  rows: any[] = [];
 
-  /** Filtra antes de agrupar */
-  get filteredPhotos(): Photo[] {
-    if (!this.filter) return this.photos;
-    const texto = this.filter.toLowerCase();
-    return this.photos.filter(p =>
-        (p.description || '').toLowerCase().includes(texto)
-    );
-  }
+  constructor() { }
 
   ngOnChanges(changes: SimpleChanges) {
-    if (changes.photos || changes.filter) {
-      this.rows = this.groupColumns(this.filteredPhotos);
-    }
+    if(changes.photos)
+      this.rows = this.groupColumns(this.photos);
   }
 
-  private groupColumns(photos: Photo[]): Photo[][] {
-    const newRows: Photo[][] = [];
-    for (let i = 0; i < photos.length; i += 3) {
-      newRows.push(photos.slice(i, i + 3));
+  groupColumns(photos: Photo[]) {
+    const newRows = [];
+
+    for(let index = 0; index < photos.length; index+=3) {
+      newRows.push(photos.slice(index, index + 3));
     }
     return newRows;
   }

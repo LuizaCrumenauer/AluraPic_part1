@@ -1,18 +1,19 @@
 <div class="text-center mt-3 mb-3">
   <form>
+    <i aria-hidden="true" class="fa fa-search me-1"></i>
     <input
+      #searchInput
       class="rounded"
       type="search"
       placeholder="search..."
       autofocus
-      [(ngModel)]="filter"
-      name="filter"
+      (keyup)="debounce.next(searchInput.value)"
     >
   </form>
 </div>
 
-<!-- opcional: mostra o que você está digitando -->
-<p>Filtrando por: "{{ filter }}"</p>
-
-<!-- passe a filter como @Input -->
-<ap-photos [photos]="photos" [filter]="filter"></ap-photos>
+<ap-photos [photos]="photos | filterByDescription: filter"></ap-photos>
+<ap-load-button
+  (click)="load()"
+  [hasMore]="hasMore">
+</ap-load-button>
