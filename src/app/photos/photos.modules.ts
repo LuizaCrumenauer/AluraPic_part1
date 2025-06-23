@@ -9,6 +9,7 @@ import {PhotoFormModule} from "./photo-form/photo-form.module";
     PhotoModule,
     PhotoFormModule,
     PhotoListModule
+
   ],
   exports:[
     PhotoModule,
