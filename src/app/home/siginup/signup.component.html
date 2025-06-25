@@ -1,0 +1,66 @@
+<h4 class="text-center"> Register to embrace a new world!</h4>
+
+<form [formGroup]="sigupForm" class="form mt-4"> <div class="form-group mb-3">
+  <input formControlName="email"  placeholder="email" class="form-control" autofocus >
+  <ap-vmessage
+    *ngIf="email?.errors?.required && email?.touched"
+    text="Email is required!">
+  </ap-vmessage>
+  <ap-vmessage
+    *ngIf="email?.errors?.email && email?.touched"
+    text="Invalid e-mail!">
+  </ap-vmessage>
+</div>
+
+  <div class="form-group mt-3">
+    <input formControlName="fullName" placeholder="full name" class="form-control">
+    <ap-vmessage
+      *ngIf="fullName?.errors?.required && fullName?.touched"
+      text="Full Name is required!">
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="fullName?.errors?.minlength && fullName?.touched"
+      text="Minimun length is 2">
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="fullName?.errors?.maxlength && fullName?.touched"
+      text="Maximum length is 40"> </ap-vmessage>
+  </div>
+
+  <div class="form-group mt-3">
+    <input formControlName="userName" placeholder="user name" class="form-control">
+    <ap-vmessage
+      *ngIf="userName?.errors?.required && userName?.touched"
+      text="User name is required!"> </ap-vmessage>
+    <ap-vmessage
+      *ngIf="userName?.errors?.minlength && userName?.touched"
+      text="Minimun length is 2">
+    </ap-vmessage>
+    <ap-vmessage
+      *ngIf="userName?.errors?.maxlength && userName?.touched"
+      text="Maximum length is 30"> </ap-vmessage>
+    <ap-vmessage
+      *ngIf="userName?.errors?.pattern && userName?.touched"
+      text="Must be lower case">
+    </ap-vmessage>
+  </div>
+
+  <div class="form-group mt-3">
+    <input formControlName="password" type="password" placeholder="password" class="form-control">
+    <ap-vmessage
+      *ngIf="password?.errors?.required && password?.touched"
+      text="Password is required!"> </ap-vmessage>
+    <ap-vmessage
+      *ngIf="password?.errors?.minlength && password?.touched"
+      text="Minimun length is 8"> </ap-vmessage>
+    <ap-vmessage
+      *ngIf="password?.errors?.maxlength && password?.touched"
+      text="Maximum length is 14"> </ap-vmessage>
+  </div>
+
+  <div class="d-grid gap-2">
+    <button class="btn btn-primary mt-3 mb-3">Register</button>
+  </div>
+
+  <p>Already a user?<a [routerLink]="['']">Sign In!</a></p>
+</form>
