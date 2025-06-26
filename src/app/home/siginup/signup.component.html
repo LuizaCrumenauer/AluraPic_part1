@@ -1,6 +1,6 @@
 <h4 class="text-center"> Register to embrace a new world!</h4>
 
-<form [formGroup]="sigupForm" class="form mt-4"> <div class="form-group mb-3">
+<form [formGroup]="signupForm" class="form mt-4" (submit)="signUp()"> <div class="form-group mb-3" >
   <input formControlName="email"  placeholder="email" class="form-control" autofocus >
   <ap-vmessage
     *ngIf="email?.errors?.required && email?.touched"
@@ -40,9 +40,16 @@
       *ngIf="userName?.errors?.maxlength && userName?.touched"
       text="Maximum length is 30"> </ap-vmessage>
     <ap-vmessage
-      *ngIf="userName?.errors?.pattern && userName?.touched"
+      *ngIf="userName?.errors?.lowerCase && userName?.touched"
       text="Must be lower case">
     </ap-vmessage>
+
+    <ap-vmessage
+      *ngIf="userName?.errors?.userNameTaken"
+      text="Username already taken">
+    </ap-vmessage>
+    <small *ngIf="userName?.valid" class="text-success">User available</small>
+
   </div>
 
   <div class="form-group mt-3">
@@ -59,7 +66,7 @@
   </div>
 
   <div class="d-grid gap-2">
-    <button class="btn btn-primary mt-3 mb-3">Register</button>
+    <button [disabled]="signupForm.invalid || signupForm.pending" class="btn btn-primary mt-3 mb-3">Register</button>
   </div>
 
   <p>Already a user?<a [routerLink]="['']">Sign In!</a></p>

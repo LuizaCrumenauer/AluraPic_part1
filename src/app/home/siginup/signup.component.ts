@@ -1,17 +1,25 @@
 import {Component, OnInit} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {lowerCaseValidator} from "../../shared/validators/lower-case.validator";
+import {UserNotTakenValidatorService} from "./user-not-taken.validator.service";
+import {NewUser} from "./new-user";
+import {SignUpService} from "./signup.service";
+import {Router} from "@angular/router";
 
 @Component({
   templateUrl: './signup.component.html',
 })
 export class SignupComponent implements OnInit {
 
-  sigupForm!: FormGroup;
+  signupForm!: FormGroup;
 
-  constructor(private formBuilder: FormBuilder) {}
+  constructor(private formBuilder: FormBuilder,
+              private userNotTakenValidatorService: UserNotTakenValidatorService,
+              private signUpService: SignUpService,
+              private router: Router) {}
 
   ngOnInit(): void {
-    this.sigupForm = this.formBuilder.group({
+    this.signupForm = this.formBuilder.group({
       email: ['',
         [
           Validators.required,
@@ -21,7 +29,6 @@ export class SignupComponent implements OnInit {
       fullName: ['',
         [
           Validators.required,
-          Validators.pattern(/^[a-z0-9_\-]+$/),
           Validators.minLength(2),
           Validators.maxLength(40)
         ]
@@ -30,8 +37,10 @@ export class SignupComponent implements OnInit {
         [
           Validators.required,
           Validators.minLength(2),
+          lowerCaseValidator,
           Validators.maxLength(30)
-        ]
+        ],
+        this.userNotTakenValidatorService.checkUserNameTaken()
       ],
       password: ['',
         [
@@ -43,11 +52,20 @@ export class SignupComponent implements OnInit {
     });
   }
 
-  get email() { return this.sigupForm.get('email')}
+  signUp() {
+    const newUser = this.signupForm.getRawValue() as NewUser;
+    this.signUpService.signup(newUser)
+      .subscribe(
+        () => this.router.navigate(['']),
+        err => console.log(err)
+      );
+  }
 
-  get fullName() { return this.sigupForm.get('fullName'); }
+  get email() { return this.signupForm.get('email')}
 
-  get userName() { return this.sigupForm.get('userName'); }
+  get fullName() { return this.signupForm.get('fullName'); }
 
-  get password() { return this.sigupForm.get('password'); }
+  get userName() { return this.signupForm.get('userName'); }
+
+  get password() { return this.signupForm.get('password'); }
 }
