@@ -1,22 +1,26 @@
-import {Component, OnInit} from "@angular/core";
+import {Component, ElementRef, OnInit, ViewChild} from "@angular/core";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 import {lowerCaseValidator} from "../../shared/validators/lower-case.validator";
 import {UserNotTakenValidatorService} from "./user-not-taken.validator.service";
 import {NewUser} from "./new-user";
 import {SignUpService} from "./signup.service";
 import {Router} from "@angular/router";
+import {PlataformDetectorService} from "../../core/plataform-detector/paltaform-detector.service";
 
 @Component({
   templateUrl: './signup.component.html',
+  providers: [ UserNotTakenValidatorService ]
 })
 export class SignupComponent implements OnInit {
 
   signupForm!: FormGroup;
+  @ViewChild('emailInput') emailInput!: ElementRef<HTMLInputElement>;
 
   constructor(private formBuilder: FormBuilder,
               private userNotTakenValidatorService: UserNotTakenValidatorService,
               private signUpService: SignUpService,
-              private router: Router) {}
+              private router: Router
+             ) {}
 
   ngOnInit(): void {
     this.signupForm = this.formBuilder.group({
@@ -50,6 +54,11 @@ export class SignupComponent implements OnInit {
         ]
       ],
     });
+  }
+
+  ngAfterViewInit(): void {
+    // A lógica para dar foco no input
+    this.emailInput.nativeElement.focus();
   }
 
   signUp() {

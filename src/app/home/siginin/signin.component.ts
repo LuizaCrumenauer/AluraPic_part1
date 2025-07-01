@@ -15,8 +15,7 @@ export class SignInComponent implements OnInit {
   constructor(
     private formBuilder: FormBuilder,
     private authService: AuthService,
-    private router: Router,
-    private platformDetectorService: PlataformDetectorService
+    private router: Router
   ) {}
 
   ngOnInit(): void {
@@ -25,6 +24,13 @@ export class SignInComponent implements OnInit {
       password: ['', Validators.required],
     });
   }
+
+  // 2. Este mtodo só roda DEPOIS que o HTML estiver pronto
+  ngAfterViewInit(): void {
+    // A lógica para dar foco no input vem para cá
+    this.userNameInput.nativeElement.focus();
+  }
+
 
   login() {
     const userName = this.loginForm.get('userName')?.value;
@@ -38,7 +44,6 @@ export class SignInComponent implements OnInit {
         err => {
           console.log(err);
           this.loginForm.reset();
-          this.platformDetectorService.isPlatformBrowser() &&
           this.userNameInput.nativeElement.focus();
           alert('Usuário ou senha inválidos');
         }
