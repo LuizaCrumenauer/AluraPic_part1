@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { SignInComponent } from './siginin/signin.component';
 import { SignupComponent } from './siginup/signup.component';
 import {HomeComponent} from "./siginup/home.component";
-import {AuthGuard} from "../core/auth/auth.guard";
+import {LoginGuard} from "../core/auth/login.guard";
 
 const routes: Routes = [
   {
@@ -11,7 +11,7 @@ const routes: Routes = [
     path: '',
     component: HomeComponent,
     // Este guard impede que um usuário JÁ LOGADO acesse a página de login novamente
-    canActivate: [AuthGuard],
+    canActivate: [LoginGuard],
     children: [
       {
         // Quando a rota for 'home', este será o componente padrão (login)
